@@ -13,7 +13,7 @@ namespace Middleware.CanonicalURL
         }
         public async Task Invoke(HttpContext context){
             var canonicalUrl = context.Request.Path.ToString();
-            if(_options.ShouldRemoveTrailingSlash())
+            if(_options.RemoveTrailingSlash)
             {
                 if(canonicalUrl.Length > 1 && string.Equals(canonicalUrl[canonicalUrl.Length -1], '/')){
                     canonicalUrl = canonicalUrl.Substring(0, canonicalUrl.Length - 1);
@@ -21,25 +21,25 @@ namespace Middleware.CanonicalURL
             }
 
             var queryString = context.Request.QueryString.ToString();
-            if(_options.MakeUrlsLowerCase())
-            {  
+            if(_options.EnforceLowerCaseUrls)
+            {
                 //If you want lowercase urls but the querystrings are case sensitive
-                if(_options.IsQueryStringCaseSensitive() && !string.IsNullOrEmpty(queryString))
+                if (_options.QueryStringCaseSensitive && !string.IsNullOrEmpty(queryString))
                 {
-                    canonicalUrl= canonicalUrl.ToLower() + queryString;
+                    canonicalUrl = canonicalUrl.ToLower() + queryString;
                 }
                 else
                 {
-                     canonicalUrl = (canonicalUrl + queryString).ToLower();;
-                }       
+                    canonicalUrl = (canonicalUrl + queryString).ToLower(); ;
+                }
             }
-            
+
             var oldPath = context.Request.Path.ToString() + context.Request.QueryString.ToString();
             if(!string.Equals(canonicalUrl, oldPath))
             {
                 context.Response.Redirect(canonicalUrl);
             }
-            
+
             await _next.Invoke(context);
         }
     }

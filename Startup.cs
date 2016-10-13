@@ -29,9 +29,9 @@ namespace CanonicalURLMiddleware
                 app.UseDeveloperExceptionPage();
             }
             var canonicalUrlOptions = new CanonicalURLMiddlewareOptions();
-            canonicalUrlOptions.EnforceLowercaseUrls();
-            canonicalUrlOptions.RemoveTrailingSlash();
-            canonicalUrlOptions.MakeQueryStringCaseSensitive();
+            canonicalUrlOptions.EnforceLowerCaseUrls = true;
+            canonicalUrlOptions.RemoveTrailingSlash = true;
+            canonicalUrlOptions.QueryStringCaseSensitive = true;
 
             app.UseCanonicalUrlMiddleware(canonicalUrlOptions);
             app.Run(async (context) =>

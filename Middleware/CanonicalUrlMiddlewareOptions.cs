@@ -9,36 +9,24 @@ namespace Middleware.CanonicalURL
     /// </summary>
     public class CanonicalURLMiddlewareOptions
     {
-        public bool _enforceLowercaseUrls;
-        public bool _caseSensitiveQueryString; 
-        public bool _removeTrailingSlash;
-        
-        
+        /// <summary>
+        /// A flag that tell the middlware if it should make the urls lowercase
+        /// </summary>
+        public bool EnforceLowerCaseUrls { get; set; }
+
+        /// <summary>
+        /// A flag the represents if the QUeryString of the url is case sensitive
+        /// and should not be altered
+        /// </summary>
+        public bool QueryStringCaseSensitive { get; set; }
+
+        /// <summary>
+        /// A flag that represents if the middleware should remove the trailing
+        /// slash from the middleware
+        /// </summary>
+        public bool RemoveTrailingSlash { get; set; }
+
         public CanonicalURLMiddlewareOptions(){}
 
-        public void EnforceLowercaseUrls(){
-            _enforceLowercaseUrls = true;
-        }
-
-        public void RemoveTrailingSlash(){
-            _removeTrailingSlash = true;
-        }
-
-        public void MakeQueryStringCaseSensitive(){
-            _caseSensitiveQueryString = true;
-        }
-
-        public bool MakeUrlsLowerCase(){
-            return _enforceLowercaseUrls;
-        }
-        public bool IsQueryStringCaseSensitive()
-        {
-            return _caseSensitiveQueryString;
-        }
-
-        public bool ShouldRemoveTrailingSlash()
-        {
-            return _removeTrailingSlash;
-        }
     }
 }
